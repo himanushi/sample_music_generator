@@ -1,3 +1,7 @@
+/*!
+ * https://himakan.net/tool/sample-music-generator
+ * MIT license
+ */
 var smg = {}
 ;( function() {
 
