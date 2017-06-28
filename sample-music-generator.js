@@ -78,15 +78,15 @@ var smg = {}
       })
     ).append(
       $( '<p>', {
-        text: result.artistName
+        text: 'アーティスト名:' + result.artistName
       })
     ).append(
       $( '<p>', {
-        text: result.collectionName
+        text: 'アルバム名:' + result.collectionName
       })
     ).append(
       $( '<p>', {
-        text: result.trackName
+        text: '曲名:' + result.trackName
       })
     ).click( function( event ) {
       set_generator( event.currentTarget );
