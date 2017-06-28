@@ -42,19 +42,15 @@ var smg = {}
     )
   }
 
+  function set_params_offset( value ) {
+    params.offset = offset = value
+  }
+
   function reset_result() {
     clear_result_list();
     set_params_term( '' );
     reset_params_offset();
     remove_results();
-  }
-
-  function set_params_offset( value ) {
-    params.offset = offset = value
-  }
-
-  function remove_results() {
-    results_ele.children().remove();
   }
 
   function clear_result_list() {
@@ -67,6 +63,10 @@ var smg = {}
 
   function reset_params_offset() {
     params.offset = offset = 0
+  }
+
+  function remove_results() {
+    results_ele.children().remove();
   }
 
   function build_result( result ) {
