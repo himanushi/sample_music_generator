@@ -1,0 +1,80 @@
+/*----------------------------------------
+ツール側
+----------------------------------------*/
+#fixedcon{
+	width:100%;
+	margin:0 0 2%;
+	overflow:hidden;
+}
+/*ユーザー入力エリア
+----------------------------------------*/
+ul#search{
+	margin:0 auto 2%;
+	padding:1.5% 0 0.4%;
+	background-color:#EAF2F9;
+	border:1px #BCD7EB solid;
+}
+ul#search li{
+	list-style:none;
+	margin:0 0 1.5% 3%;
+}
+
+/*プレビュー
+----------------------------------------*/
+#preview{
+	float:left;
+	width:320px;
+	margin:0 3% 0 0;
+}
+/*テキストコピーエリア
+----------------------------------------*/
+#text{
+	float:left;
+	width:60%;
+	vertical-align:top;
+	padding:0 1%;
+}
+#text textarea{
+	width:100%;
+	height:100px;
+	margin:0 0 1%;
+}
+/*コピーボタン------------------*/
+#text p{
+	margin:0;
+}
+#text #copy{
+	display:block;
+	width:100%;
+	margin:0 auto;
+}
+
+/*リスト
+----------------------------------------*/
+#results{
+	margin:0 0 2%;
+	padding:2% 0;
+	background-color:#F6F6F6;
+	border:3px #ccc solid;
+	max-height:400px;
+	overflow-y:scroll;
+}
+/*アイテム------------------*/
+#results div{
+	margin:0 2% 2%;
+	padding:0 0 2%;
+	border-bottom:1px #ccc dotted;
+}
+#results div img{
+	float:left;
+	margin:0 1% 0 0;
+}
+#results div p{
+	margin:0 0 1%;
+}
+/*もっと検索ボタン
+----------------------------------------*/
+#more{
+	display:none;
+	width:100%;
+}

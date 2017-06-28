@@ -1,0 +1,44 @@
+/*----------------------------------------
+プレイヤー
+----------------------------------------*/
+.itunes_sample_player{
+	display:inline-block;
+	margin:0.5% 0;
+	padding:0.8%;
+	background-color:#F6F6F6;
+	border:1px #ccc solid;
+	overflow:hidden;
+	text-wrap:none;
+}
+.itunes_sample_player img{
+	float:left;
+	width:100px;
+	display:block;
+	margin:0 5px 5px 0;
+}
+.itunes_sample_player div.itunes_sample_info{
+	float:left;
+	width:215px;
+	margin:0 0 6%;
+}
+.itunes_sample_player div.itunes_sample_info p{
+	line-height:1.5em;
+	margin:0 0 5%;
+	color:#333;
+}
+/*曲のタイトル*/
+.itunes_sample_player div.itunes_sample_info p.itunes_sample_title a{
+	text-decoration:none;
+	font-weight:bold;
+}
+/*発売日*/
+.itunes_sample_player div.itunes_sample_info p.itunes_sample_date{
+	font-size:0.8em;
+	color:#959595;
+}
+.itunes_sample_player audio{
+	clear:both;
+	margin:2% 0;
+	display:block;
+	width:320px;
+}
