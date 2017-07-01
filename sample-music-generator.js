@@ -9,15 +9,17 @@ var smg = {}
 
   var
     searchUrl       = 'https://itunes.apple.com/search',
-    limit           = 5,
+    limit           = 20,
     offset          = 0,
     results_ele     = $( '#results' ),
     affiliate_param = '&at=',
+    attribute_song  = 'songTerm',
+    attribute_album = 'albumTerm',
     params = {
       term:      '',
       media:     'music',
       entity:    'song',
-      attribute: 'songTerm',
+      attribute: '',
       country:   'jp',
       lang:      'ja_jp',
       offset:    offset,
@@ -25,6 +27,7 @@ var smg = {}
     };
 
   smg.result_list = [];
+  smg.attribute = '';
 
   function searchArtists() {
     $.getJSON(
@@ -40,6 +43,10 @@ var smg = {}
         set_params_offset( offset + limit );
       }
     )
+  }
+
+  function set_params_attribute( attribute ) {
+    params.attribute = smg.attribute = attribute
   }
 
   function set_params_offset( value ) {
@@ -275,16 +282,32 @@ var smg = {}
     return id;
   }
 
-  $( '#term' ).change( function( event ) {
+  $( '#song' ).keypress( function( e ) {
+    if ( e.which === 13 ) {
+      change_event( attribute_song );
+      return false;
+    }
+  });
+
+  $( '#album' ).keypress( function( e ) {
+    if ( e.which === 13 ) {
+      change_event( attribute_album );
+      return false;
+    }
+  });
+
+  function change_event( attribute ) {
     if('' !== event.target.value){
       reset_result();
+      set_params_attribute( attribute );
       set_params_term( event.target.value );
       $( '#more' ).css( 'display', 'inline' );
       searchArtists();
     }
-  });
+  }
 
   $( '#more' ).click( function() {
+    set_params_attribute( smg.attribute );
     searchArtists();
   });
 
