@@ -9,12 +9,13 @@ var smg = {}
 
   var
     searchUrl       = 'https://itunes.apple.com/search',
-    limit           = 20,
+    limit           = 30,
     offset          = 0,
     results_ele     = $( '#results' ),
     affiliate_param = '&at=',
-    attribute_song  = 'songTerm',
+    attribute_artist = 'artistTerm',
     attribute_album = 'albumTerm',
+    attribute_song  = 'songTerm',
     params = {
       term:      '',
       media:     'music',
@@ -282,21 +283,28 @@ var smg = {}
     return id;
   }
 
-  $( '#song' ).keypress( function( e ) {
+  $( '#artist' ).keypress( function( e ) {
     if ( e.which === 13 ) {
-      change_event( attribute_song );
+      search( attribute_artist );
       return false;
     }
   });
 
   $( '#album' ).keypress( function( e ) {
     if ( e.which === 13 ) {
-      change_event( attribute_album );
+      search( attribute_album );
       return false;
     }
   });
 
-  function change_event( attribute ) {
+  $( '#song' ).keypress( function( e ) {
+    if ( e.which === 13 ) {
+      search( attribute_song );
+      return false;
+    }
+  });
+
+  function search( attribute ) {
     if('' !== event.target.value){
       reset_result();
       set_params_attribute( attribute );
