@@ -254,13 +254,21 @@ var smg = {}
 
   function href_generator( url ) {
     var
-      token = $( '#affiliate_token' ).val();
+      token = get_affiliate_token();
 
+    $.cookie( 'affiliate_token', token );
     if ( '' === token ) {
       return url
     } else {
       return url + affiliate_param + token
     }
+  }
+
+  function get_affiliate_token() {
+    var
+      token = $( '#affiliate_token' ).val();
+    $.cookie( 'affiliate_token', token );
+    return token
   }
 
   function date_generator( str_date ) {
@@ -325,4 +333,5 @@ var smg = {}
     $( '#copy' ).text( 'コピーしました！' );
   });
 
+  $( '#affiliate_token' ).val( $.cookie( 'affiliate_token' ) );
 })();
