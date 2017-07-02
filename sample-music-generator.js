@@ -188,6 +188,7 @@ var smg = {}
       "u=cE('audio');" +
       "u.src='" + result.previewUrl + "';" +
       "u.controls=true;" +
+      "u.preload='metadata';" +
       "p=cE('div');" +
       "p.className='itunes_sample_player';" +
       "p.appendChild(w);" +
@@ -247,7 +248,8 @@ var smg = {}
     ).append(
       $( '<audio>', {
         src: result.previewUrl,
-        controls: true
+        controls: true,
+        preload: 'metadata'
       })
     );
   }
