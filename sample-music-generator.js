@@ -295,33 +295,31 @@ var smg = {}
 
   $( '#artist' ).keypress( function( e ) {
     if ( e.which === 13 ) {
-      search( attribute_artist );
+      search( attribute_artist, e.target.value );
       return false;
     }
   });
 
   $( '#album' ).keypress( function( e ) {
     if ( e.which === 13 ) {
-      search( attribute_album );
+      search( attribute_album, e.target.value );
       return false;
     }
   });
 
   $( '#song' ).keypress( function( e ) {
     if ( e.which === 13 ) {
-      search( attribute_song );
+      search( attribute_song, e.target.value );
       return false;
     }
   });
 
-  function search( attribute ) {
-    if('' !== event.target.value){
-      reset_result();
-      set_params_attribute( attribute );
-      set_params_term( event.target.value );
-      $( '#more' ).css( 'display', 'inline' );
-      searchArtists();
-    }
+  function search( attribute, team ) {
+    reset_result();
+    set_params_attribute( attribute );
+    set_params_term( team );
+    $( '#more' ).css( 'display', 'inline' );
+    searchArtists();
   }
 
   $( '#more' ).click( function() {
