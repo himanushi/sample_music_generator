@@ -129,7 +129,7 @@ var amg = {};
     return $( '<iframe>',{
       src: src_generator( appleToolUrl + result.trackId + appleToolCountry ),
       frameborder: 0
-    }).attr('height', '150px').attr('width', '100%');
+    }).attr('height', '110px').attr('width', '100%');
   }
 
   function src_generator( url ) {
