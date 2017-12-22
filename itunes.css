@@ -10,21 +10,43 @@
 	overflow:hidden;
 	text-wrap:none;
 }
+@media screen and (max-width:350px){
+.itunes_sample_player{
+	width:100%;
+	padding: 1.5%;
+}
+}
 .itunes_sample_player img{
 	float:left;
 	width:100px;
 	display:block;
 	margin:0 5px 5px 0;
 }
+@media screen and (max-width:350px){
+.itunes_sample_player img{
+	width:18%;
+}
+}
 .itunes_sample_player div.itunes_sample_info{
 	float:left;
 	width:215px;
 	margin:0 0 6%;
 }
+@media screen and (max-width:350px){
+.itunes_sample_player div.itunes_sample_info{
+	width:80%;
+	margin: 0;
+}
+}
 .itunes_sample_player div.itunes_sample_info p{
 	line-height:1.5em;
 	margin:0 0 5%;
 	color:#333;
+}
+@media screen and (max-width:350px){
+.itunes_sample_player div.itunes_sample_info p{
+	margin:0 0 1%;
+}
 }
 /*曲のタイトル*/
 .itunes_sample_player div.itunes_sample_info p.itunes_sample_title a{
@@ -41,4 +63,9 @@
 	margin:2% 0;
 	display:block;
 	width:320px;
+}
+@media screen and (max-width:350px){
+.itunes_sample_player audio{
+	width:100%;
+}
 }

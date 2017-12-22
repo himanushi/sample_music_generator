@@ -12,6 +12,7 @@ var smg = {}
     limit           = 30,
     offset          = 0,
     results_ele     = $( '#results' ),
+    itunes_param = '&app=itunes',
     affiliate_param = '&at=',
     attribute_artist = 'artistTerm',
     attribute_album = 'albumTerm',
@@ -262,7 +263,7 @@ var smg = {}
     if ( '' === token ) {
       return url
     } else {
-      return url + affiliate_param + token
+      return url + itunes_param +affiliate_param + token
     }
   }
 
