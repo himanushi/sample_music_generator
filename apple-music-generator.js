@@ -8,8 +8,6 @@ var amg = {};
   'use strict';
 
   var
-    appleToolUrl     = 'https://tools.applemusic.com/embed/v1/song/',
-    appleToolCountry = '?country=jp',
     searchUrl        = 'https://itunes.apple.com/search',
     limit            = 30,
     offset           = 0,
@@ -118,7 +116,6 @@ var amg = {};
           text: sample.prop('outerHTML').replace(/&amp;/g,'&')
         })
       );
-
     preview.children().remove();
     preview.append( sample );
 
@@ -126,15 +123,20 @@ var amg = {};
   }
 
   function html_generator( result ) {
-    return $( '<iframe>',{
-      src: src_generator( appleToolUrl + result.trackId + appleToolCountry ),
-      frameborder: 0
-    }).attr('height', '110px').attr('width', '100%');
+    return $('<iframe>').attr('allow', 'autoplay *; encrypted-media *;')
+      .attr('frameborder', '0')
+      .attr('height', '150')
+      .attr('style', 'width:100%;max-width:660px;overflow:hidden;background:transparent;')
+      .attr('sandbox', 'allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation')
+      .attr('src', src_generator(result.trackViewUrl));
   }
 
   function src_generator( url ) {
     var
       token = get_affiliate_token();
+
+    url = url.replace('itunes.apple.com', 'embed.music.apple.com')
+             .replace('&uo=4', '&app=music');
 
     $.cookie( 'affiliate_token', token );
     if ( '' === token ) {

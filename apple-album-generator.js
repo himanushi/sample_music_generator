@@ -8,8 +8,6 @@ var aag = {};
   'use strict';
 
   var
-    appleToolUrl     = 'https://tools.applemusic.com/embed/v1/album/',
-    appleToolCountry = '?country=jp',
     searchUrl        = 'https://itunes.apple.com/search',
     limit            = 30,
     offset           = 0,
@@ -126,15 +124,21 @@ var aag = {};
   }
 
   function html_generator( result ) {
-    return $( '<iframe>',{
-      src: src_generator( appleToolUrl + result.collectionId + appleToolCountry ),
-      frameborder: 0
-    }).attr('height', '500px').attr('width', '100%');
+    return $('<iframe>')
+      .attr('allow', 'autoplay *; encrypted-media *;')
+      .attr('frameborder', '0')
+      .attr('height', '450')
+      .attr('style', 'width:100%;max-width:660px;overflow:hidden;background:transparent;')
+      .attr('sandbox', 'allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation')
+      .attr('src', src_generator(result.trackViewUrl));
   }
 
   function src_generator( url ) {
     var
       token = get_affiliate_token();
+
+    url = url.replace('itunes.apple.com', 'embed.music.apple.com')
+             .replace(/\?.*/, '&app=music');
 
     $.cookie( 'affiliate_token', token );
     if ( '' === token ) {
