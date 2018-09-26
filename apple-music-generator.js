@@ -2,6 +2,13 @@
  * https://himakan.net/tool/apple-music-generator
  * MIT license
  */
+function searchResult(r) {
+  $.each( r.results, function( key, result ) {
+    $( '#results' ).append( amg.build_result( result ) );
+    amg.result_list.push( result );
+  });
+}
+
 var amg = {};
 ( function() {
 
@@ -24,35 +31,27 @@ var amg = {};
       country:   'jp',
       lang:      'ja_jp',
       offset:    offset,
-      limit:     limit
+      limit:     limit,
+      callback:  'searchResult'
     };
 
   amg.result_list = [];
   amg.attribute = '';
 
   function searchArtists() {
-    $.getJSON(
-      searchUrl,
-      params,
-      function( data, status ) {
-
-        $.each( data.results, function( key, result ) {
-          results_ele.append( build_result( result ) );
-          amg.result_list.push( result );
-        });
-
-        set_params_offset( offset + limit );
-      }
-    )
+    var script = document.createElement('script');
+    script.setAttribute('src', searchUrl + '?' + $.param(params));
+    document.head.appendChild(script);
+    document.head.removeChild(script);
   }
 
   function set_params_attribute( attribute ) {
     params.attribute = amg.attribute = attribute
   }
 
-  function set_params_offset( value ) {
+  amg.set_params_offset = function( value ) {
     params.offset = offset = value
-  }
+  };
 
   function reset_result() {
     clear_result_list();
@@ -77,7 +76,7 @@ var amg = {};
     results_ele.children().remove();
   }
 
-  function build_result( result ) {
+  amg.build_result = function ( result ) {
     return $( '<div>', {
       'data-song-no': amg.result_list.length
     }).append(
@@ -99,7 +98,7 @@ var amg = {};
     ).click( function( event ) {
       set_generator( event.currentTarget );
     })
-  }
+  };
 
   function set_generator( div_ele ) {
     var

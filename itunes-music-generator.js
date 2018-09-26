@@ -2,12 +2,21 @@
  * https://himakan.net/tool/apple-music-generator
  * MIT license
  */
-var amg = {};
+function searchResult(r) {
+  $.each( r.results, function( key, result ) {
+    $( '#results' ).append( img.build_result( result ) );
+    img.result_list.push( result );
+  });
+}
+
+var img = {};
 ( function() {
 
   'use strict';
 
   var
+    appleToolUrl     = 'https://tools.applemusic.com/embed/v1/song/',
+    appleToolCountry = '?country=jp',
     searchUrl        = 'https://itunes.apple.com/search',
     limit            = 30,
     offset           = 0,
@@ -24,35 +33,27 @@ var amg = {};
       country:   'jp',
       lang:      'ja_jp',
       offset:    offset,
-      limit:     limit
+      limit:     limit,
+      callback:  'searchResult'
     };
 
-  amg.result_list = [];
-  amg.attribute = '';
+  img.result_list = [];
+  img.attribute = '';
 
   function searchArtists() {
-    $.getJSON(
-      searchUrl,
-      params,
-      function( data, status ) {
-
-        $.each( data.results, function( key, result ) {
-          results_ele.append( build_result( result ) );
-          amg.result_list.push( result );
-        });
-
-        set_params_offset( offset + limit );
-      }
-    )
+    var script = document.createElement('script');
+    script.setAttribute('src', searchUrl + '?' + $.param(params));
+    document.head.appendChild(script);
+    document.head.removeChild(script);
   }
 
   function set_params_attribute( attribute ) {
-    params.attribute = amg.attribute = attribute
+    params.attribute = img.attribute = attribute
   }
 
-  function set_params_offset( value ) {
+  img.set_params_offset = function( value ) {
     params.offset = offset = value
-  }
+  };
 
   function reset_result() {
     clear_result_list();
@@ -62,7 +63,7 @@ var amg = {};
   }
 
   function clear_result_list() {
-    amg.result_list = [];
+    img.result_list = [];
   }
 
   function set_params_term( value ) {
@@ -77,9 +78,9 @@ var amg = {};
     results_ele.children().remove();
   }
 
-  function build_result( result ) {
+  img.build_result = function ( result ) {
     return $( '<div>', {
-      'data-song-no': amg.result_list.length
+      'data-song-no': img.result_list.length
     }).append(
       $( '<img>', {
         src: result.artworkUrl100
@@ -99,13 +100,13 @@ var amg = {};
     ).click( function( event ) {
       set_generator( event.currentTarget );
     })
-  }
+  };
 
   function set_generator( div_ele ) {
     var
       generator = $( '#generator' ),
       preview = $( '#preview' ),
-      result = amg.result_list[ div_ele.dataset.songNo ],
+      result = img.result_list[ div_ele.dataset.songNo ],
       sample = html_generator( result );
 
     generator.children().remove();
@@ -123,20 +124,15 @@ var amg = {};
   }
 
   function html_generator( result ) {
-    return $('<iframe>').attr('allow', 'autoplay *; encrypted-media *;')
-      .attr('frameborder', '0')
-      .attr('height', '150')
-      .attr('style', 'width:100%;max-width:660px;overflow:hidden;background:transparent;')
-      .attr('sandbox', 'allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation')
-      .attr('src', src_generator(result.trackViewUrl));
+    return $( '<iframe>',{
+      src: src_generator( appleToolUrl + result.trackId + appleToolCountry ),
+      frameborder: 0
+    }).attr('height', '110px').attr('width', '100%');
   }
 
   function src_generator( url ) {
     var
       token = get_affiliate_token();
-
-    url = url.replace('itunes.apple.com', 'embed.music.apple.com')
-             .replace('&uo=4', '&app=music');
 
     $.cookie( 'affiliate_token', token );
     if ( '' === token ) {
@@ -183,7 +179,7 @@ var amg = {};
   }
 
   $( '#more' ).click( function() {
-    set_params_attribute( amg.attribute );
+    set_params_attribute( img.attribute );
     searchArtists();
   });
 

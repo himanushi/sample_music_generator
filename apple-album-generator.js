@@ -2,6 +2,13 @@
  * https://himakan.net/other/journal/sample-music-generator_album-ver
  * MIT license
  */
+function searchResult(r) {
+  $.each( r.results, function( key, result ) {
+    $( '#results' ).append( aag.build_result( result ) );
+    aag.result_list.push( result );
+  });
+}
+
 var aag = {};
 ( function() {
 
@@ -24,35 +31,27 @@ var aag = {};
       country:   'jp',
       lang:      'ja_jp',
       offset:    offset,
-      limit:     limit
+      limit:     limit,
+      callback:  'searchResult'
     };
 
   aag.result_list = [];
   aag.attribute = '';
 
   function searchArtists() {
-    $.getJSON(
-      searchUrl,
-      params,
-      function( data, status ) {
-
-        $.each( data.results, function( key, result ) {
-          results_ele.append( build_result( result ) );
-          aag.result_list.push( result );
-        });
-
-        set_params_offset( offset + limit );
-      }
-    )
+    var script = document.createElement('script');
+    script.setAttribute('src', searchUrl + '?' + $.param(params));
+    document.head.appendChild(script);
+    document.head.removeChild(script);
   }
 
   function set_params_attribute( attribute ) {
     params.attribute = aag.attribute = attribute
   }
 
-  function set_params_offset( value ) {
+  aag.set_params_offset = function( value ) {
     params.offset = offset = value
-  }
+  };
 
   function reset_result() {
     clear_result_list();
@@ -77,7 +76,7 @@ var aag = {};
     results_ele.children().remove();
   }
 
-  function build_result( result ) {
+  aag.build_result = function ( result ) {
     return $( '<div>', {
       'data-song-no': aag.result_list.length
     }).append(
@@ -99,7 +98,7 @@ var aag = {};
     ).click( function( event ) {
       set_generator( event.currentTarget );
     })
-  }
+  };
 
   function set_generator( div_ele ) {
     var
